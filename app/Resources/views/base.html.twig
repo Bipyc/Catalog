@@ -2,15 +2,82 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Catalog{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('css/common.css') }}" />
+            <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+            <link rel="stylesheet" type="text/css" href="{{ asset('vendor/materialize/css/materialize.min.css') }}"  media="screen,projection"/>
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <header class="header">
+            <nav class="blue darken-3">
+                <div class="nav-wrapper">
+                        <ul class="left hide-on-med-and-down">
+                            <li class="waves-effect"><a class="logo" href="#">Catalog</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    {{ knp_menu_render('AppBundle:Builder:mainMenu', {'depth': 1, 'currentClass': 'active', 'currentAsLink': true}) }}
+                                </li>
+                            {% elseif is_granted('ROLE_MOD') %}
+                                <li>
+                                    {{ knp_menu_render('AppBundle:Builder:modMenu', {'depth': 1, 'currentClass': 'active', 'currentAsLink': true}) }}
+                                </li>
+                            {% elseif is_granted('ROLE_USER') %}
+                                <li>
+                                    {{ knp_menu_render('AppBundle:Builder:userMenu', {'depth': 1, 'currentClass': 'active', 'currentAsLink': true}) }}
+                                </li>
+                            {% endif %}
+                        </ul>
+
+                        <ul class="waves-effect right hide-on-med-and-down">
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="user-name">{{ app.user.userName }}</li>
+                                <li><a href="{{ path('security_logout') }}" class="btn waves-effect red">Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ path('security_login') }}" class="btn waves-effect">Login</a></li>
+                                <li><a href="{{ path('user_register') }}" class="btn-flat waves-effect">Register</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                <li><a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a></li>
+                            {% endif %}
+                        </ul>
+                </div>
+            </nav>
+        </header>
+
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m5">
+                        <div class="card-panel teal">
+                            <span class="white-text">
+                                {{ msg }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        {% block javascripts %}
+            <script src="http://code.jquery.com/jquery-2.2.4.min.js"
+                    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+                    crossorigin="anonymous">
+            </script>
+            <script src="{{ asset('vendor/materialize/js/materialize.min.js') }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.dropdown-button').dropdown();
+                });
+            </script>
+        {% endblock %}
     </body>
 </html>
+
+

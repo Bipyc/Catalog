@@ -33,3 +33,27 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    password_recovery:
+        class: AppBundle\Services\PasswordRecoveryService
+        autowire: true
+#        arguments: ["@service_container", "@doctrine.orm.entity_manager"]
+    category_service:
+        class: AppBundle\Services\CategoryService
+        autowire: true
+    products_service:
+        class: AppBundle\Services\ProductsService
+        autowire: true
+    data_processor:
+        class: AppBundle\Services\DataProcessor
+        autowire: true
+    form_utils:
+        class: AppBundle\Services\FormUtilsService
+    app.security.login_form_authenticator:
+        class: AppBundle\Security\LoginFormAuthenticator
+        autowire: true
+
+    app.doctrine.hash_password_listener:
+        class: AppBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }

@@ -1,0 +1,42 @@
+{% extends 'default/index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sign-in.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {% if error %}
+        {% include 'form-error.html.twig' with {'error': error.messageKey|trans(error.messageData, 'security')} %}
+    {% endif %}
+
+    <a class="logo alone" href="{{ url('homepage') }}">ProductCatalog</a>
+    {% block particles %}
+        {{ parent() }}
+        <div class="form-container">
+            <div class="row">
+                <div class="col s12">
+                    {% if message %}
+                        <div class="card-panel green lighten-2">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_start(form, { 'attr': {'class': 'rounded row'} }) }}
+                    <h4 class="form-header">Log In</h4>
+                    <a class="right btn-flat waves-effect link-to-recovery" href="{{ path('password_recovery') }}">Forgot password?</a>
+                    {{ form_row(form._username, { 'label': 'Email'}) }}
+                    {{ form_row(form._password) }}
+                    <button type="submit" class="col s4 btn waves-effect blue darken-4">Login</button>
+                    <a class="right btn waves-effect red " href="{{ url('user_register') }}">Already registered?</a>
+                    <!--<a href="{{ path('user_register') }}" class="btn">Register</a>-->
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% include 'footer.html.twig' %}
+{% endblock %}
+

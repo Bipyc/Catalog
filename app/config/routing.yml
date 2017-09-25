@@ -1,5 +1,15 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+
+login:
+    path: /login
+    defaults: { _controller: AppBundle:Security:login }
+
 logout:
     path: /logout
+
+catalog:
+    path: /catalog
+    defaults: { _controller: AppBundle:Catalog:show }

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            overflow-y:scroll;
+        }
+
+        nav {
+            display: block;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 15, // Creates a dropdown of 15 years to control year
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        })
+    </script>
+{% endblock %}
