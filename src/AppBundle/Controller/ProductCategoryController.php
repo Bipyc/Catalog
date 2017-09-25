@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ProductCategoryController extends Controller
 {
     /**
-     * @Route("/treecatalog", name="tree_catalog")
+     * @Route("/treecat", name="tree_cat")
      */
     public function categoryListAction()
     {
