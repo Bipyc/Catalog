@@ -5,6 +5,7 @@
         <div class="blue" id="particles">
         </div>
     {% endblock %}
+    <div class="container">
     <div id="hero" class="row">
         <h2 class="transition hero-element first col s12">Welcome to product catalog
             {% if is_granted('ROLE_BROWSE_CATALOG') %},
@@ -18,13 +19,13 @@
                 </a>
             </div>
         {% else %}
-            <h4 class="transition hero-element second col s12">"We are open for e-commerce"</h4>
             <div class="transition hero-element col s12 row third">
                 <div class="transition col s12 login-link"><a class="btn btn-large waves-effect blue darken-4" href="{{ url("login") }}">Log In</a></div>
                 <div class="transition col s12 or"><br>no account?</div>
                 <div class="transition col s12 register-link"><a class="btn btn-large waves-effect red" href="{{ url("user_register") }}">Sign Up</a></div>
             </div>
         {% endif %}
+    </div>
     </div>
     {% include 'footer.html.twig' %}
 {% endblock %}
